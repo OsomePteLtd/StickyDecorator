@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sticky"
+        android:title="Sticky header" />
+
+    <item
+        android:id="@+id/stickyReverse"
+        android:title="Sticky header reverse layout" />
+
+    <item
+        android:id="@+id/section"
+        android:title="Just section" />
+
+    <item
+        android:id="@+id/sectionReverse"
+        android:title="Just section reverse layout" />
+
+    <item
+        android:id="@+id/viewHolder"
+        android:title="Sticky view holder" />
+
+    <item
+        android:id="@+id/viewHolderReverse"
+        android:title="Sticky view holder reverse" />
+</menu>
