@@ -9,4 +9,5 @@
     android:paddingEnd="16dp"
     android:paddingBottom="4dp"
     android:textColor="#fff"
+    android:textSize="12dp"
     tools:text="123" />

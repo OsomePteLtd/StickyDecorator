@@ -6,27 +6,29 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import com.osome.stickydecorator.Item
 import com.osome.stickydecorator.ItemProvider
+import com.osome.stickydecorator.SimpleTextDrawable
 import com.osome.stickydecorator.VerticalDrawableSectionDecor
 
 class SectionDecor(private val itemProvider: ItemProvider<Item>) : VerticalDrawableSectionDecor() {
 
     private val section = buildTextDrawable()
 
-    private fun buildTextDrawable(): TextDrawable {
-        val d = TextDrawable(
-                textColor = Color.BLACK,
-                backColor = Color.LTGRAY
-        )
-        d.text = "10" // init drawable height
-        return d
+    private fun buildTextDrawable(): SimpleTextDrawable {
+        return SimpleTextDrawable.Builder()
+                .setPaddingSymmetricDp(12, 4)
+                .setBackgroundColor(Color.LTGRAY)
+                .setTextGravity(SimpleTextDrawable.SimpleGravity.LEFT)
+                .setTextColor(Color.BLACK)
+                .setTextSizeDp(14)
+                .build()
     }
 
     override fun getSectionHeight(position: Int): Int {
-        return section.getHeight()
+        return section.height
     }
 
     override fun getSectionMarginTop(): Int {
-        return section.getHeight()
+        return section.height
     }
 
     override fun getDrawable(position: Int, sectionBounds: Rect, child: View): Drawable {

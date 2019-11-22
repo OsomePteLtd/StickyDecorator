@@ -170,3 +170,17 @@ also you can add top and bottom margins for header, just override two methods
         // return header bottom space
     }
 ``` 
+
+#### SimpleTextDrawable
+To simplify usage drawable decorator library contains also SimpleTextDrawable class.   
+This class allow build styled drawable 
+```
+SimpleTextDrawable.Builder()
+                .setPaddingSymmetricDp(12, 4)
+                .setBackgroundColor(Color.LTGRAY)
+                .setTextGravity(SimpleTextDrawable.SimpleGravity.LEFT)
+                .setTextColor(Color.BLACK)
+                .setTextSizeDp(14)
+                .setTypeface(customTypeFace)
+                .build()
+```

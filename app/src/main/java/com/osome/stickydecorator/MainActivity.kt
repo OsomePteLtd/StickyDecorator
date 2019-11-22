@@ -11,6 +11,7 @@ import com.osome.stickydecorator.decor.StickyDecorReverse
 import com.osome.stickydecorator.decor.StickySectionDecor
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     private val adapter = ItemAdapter(generateItem(32))
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "Select options here  =======>"
+
         setUpStickyRecycler()
     }
 
