@@ -50,7 +50,7 @@ public class ConditionItemDecorator extends RecyclerView.ItemDecoration {
         decor.onPostDrawOver(c, parent, state);
     }
 
-    interface Condition {
+    public interface Condition {
         /**
          * Determines for which item should apply decoration
          *
@@ -60,7 +60,7 @@ public class ConditionItemDecorator extends RecyclerView.ItemDecoration {
         boolean isForDrawOver(int position);
     }
 
-    interface Decor {
+    public interface Decor {
 
         /**
          * Called every time when called {@link RecyclerView.ItemDecoration#onDrawOver(Canvas, RecyclerView, RecyclerView.State)}.
