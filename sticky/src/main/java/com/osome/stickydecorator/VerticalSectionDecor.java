@@ -22,7 +22,7 @@ public abstract class VerticalSectionDecor implements ConditionItemDecorator.Dec
     public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull View child, int position, @NonNull RecyclerView.State state) {
         parent.getDecoratedBoundsWithMargins(child, decoratedBounds);
         Rect bounds = getViewBounds(parent, child);
-        onDrawSectionInternal(c, position, getSectionBounds(position, bounds, decoratedBounds), child);
+        onDrawSectionInternal(c, position, getSectionBounds(parent, position, bounds, decoratedBounds), child);
     }
 
     void onDrawSectionInternal(@NonNull Canvas c, int position, @NonNull Rect sectionBounds, @NonNull View child) {
@@ -38,7 +38,7 @@ public abstract class VerticalSectionDecor implements ConditionItemDecorator.Dec
     }
 
     @NonNull
-    protected Rect getSectionBounds(int position, @NonNull Rect viewBounds, @NonNull Rect decoratedBounds) {
+    protected Rect getSectionBounds(@NonNull RecyclerView parent, int position, @NonNull Rect viewBounds, @NonNull Rect decoratedBounds) {
         int left = viewBounds.left;
         int top = decoratedBounds.top + getSectionMarginTop();
         int right = viewBounds.right;

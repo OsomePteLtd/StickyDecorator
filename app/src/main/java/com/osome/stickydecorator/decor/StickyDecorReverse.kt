@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.osome.stickydecorator.Item
 import com.osome.stickydecorator.ItemProvider
 import com.osome.stickydecorator.SimpleTextDrawable
@@ -36,16 +37,16 @@ class StickyDecorReverse(private val itemProvider: ItemProvider<Item>) : Vertica
         return header
     }
 
-    override fun getSectionBounds(position: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
+    override fun getSectionBounds(parent: RecyclerView, position: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
         section.text = getHeaderValue(position)
-        val temp = super.getSectionBounds(position, viewBounds, decoratedBounds)
+        val temp = super.getSectionBounds(parent, position, viewBounds, decoratedBounds)
         section.setTopCenter(temp.exactCenterX(), temp.top.toFloat())
         return section.bounds
     }
 
 
-    override fun getHeaderBounds(headerBottom: Int, itemPosition: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
-        val temp = super.getHeaderBounds(headerBottom, itemPosition, viewBounds, decoratedBounds)
+    override fun getHeaderBounds(parent: RecyclerView, headerBottom: Int, itemPosition: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
+        val temp = super.getHeaderBounds(parent, headerBottom, itemPosition, viewBounds, decoratedBounds)
         header.text = getHeaderValue(itemPosition)
         header.setTopCenter(temp.exactCenterX(), temp.top.toFloat())
         return header.bounds

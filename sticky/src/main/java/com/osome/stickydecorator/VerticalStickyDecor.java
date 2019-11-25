@@ -78,14 +78,14 @@ public abstract class VerticalStickyDecor extends VerticalSectionDecor {
             }
         }
 
-        drawHeaderInternal(c, state);
+        drawHeaderInternal(c, parent, state);
     }
 
-    private void drawHeaderInternal(@NonNull Canvas c, @NonNull RecyclerView.State state) {
+    private void drawHeaderInternal(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         if (contactSection.isValid) {
             int itemPosition = getItemPosition(state);
             int headerBottom = contactSection.top - getHeaderMarginBottom();
-            Rect headerBounds = getHeaderBounds(headerBottom, itemPosition, viewBounds, decoratedBounds);
+            Rect headerBounds = getHeaderBounds(parent, headerBottom, itemPosition, viewBounds, decoratedBounds);
             if (!reverseLayout && contactSection.position == 0 && headerBounds.top - getHeaderMarginTop() < 0) {
                 return;
             }
@@ -97,7 +97,7 @@ public abstract class VerticalStickyDecor extends VerticalSectionDecor {
         if (contactPosition != RecyclerView.NO_POSITION) {
             int itemPosition = contactPosition;
             int headerBottom = getHeaderMarginTop() + getHeaderHeightInternal();
-            Rect headerBounds = getHeaderBounds(headerBottom, itemPosition, viewBounds, decoratedBounds);
+            Rect headerBounds = getHeaderBounds(parent, headerBottom, itemPosition, viewBounds, decoratedBounds);
             onDrawHeader(c, itemPosition, headerBounds);
         }
     }
@@ -118,7 +118,7 @@ public abstract class VerticalStickyDecor extends VerticalSectionDecor {
     protected abstract void onDrawHeader(@NonNull Canvas c, int position, @NonNull Rect headerBounds);
 
     @NonNull
-    protected Rect getHeaderBounds(int headerBottom, int itemPosition, @NonNull Rect viewBounds, @NonNull Rect decoratedBounds) {
+    protected Rect getHeaderBounds(@NonNull RecyclerView parent, int headerBottom, int itemPosition, @NonNull Rect viewBounds, @NonNull Rect decoratedBounds) {
         int left = decoratedBounds.left;
         int top = headerBottom - getHeaderHeightInternal();
         int right = decoratedBounds.right;
