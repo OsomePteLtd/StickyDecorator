@@ -58,7 +58,7 @@ recyclerView.addItemDecoration(ViewHolderStickyDecoration(recyclerView, adapter,
 For GridLayoutManager you should set up SpanSizeLookup, for example
 ```
 val spanCount = 3
-val lm = GridLayoutManager(recycler.context, spanCount, GridLayoutManager.VERTICAL, true)
+val lm = GridLayoutManager(recycler.context, spanCount)
 
 lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
     override fun getSpanSize(position: Int): Int {
