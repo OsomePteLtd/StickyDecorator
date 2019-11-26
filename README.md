@@ -34,8 +34,8 @@ implementation "com.osome.decoration:sticky:<latest_version>"
 
 ### Usage    
 #### ViewHolderStickyDecoration             
-Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](https://github.com/OsomePteLtd/StickyDecorator/blob/master/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)
-This decoration also support **vertical** GridLayoutManager(see example application)
+Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](https://github.com/OsomePteLtd/StickyDecorator/blob/master/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)   
+This decoration also support **vertical** GridLayoutManager(see example application)   
 Firstly, you should make implement yours Adapter this interface `ViewHolderStickyDecoration.Condition` like this:
 ```
 class SectionItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ViewHolderStickyDecoration.Condition {
@@ -53,6 +53,21 @@ recyclerView.addItemDecoration(ViewHolderStickyDecoration(recyclerView, adapter)
 If you are use reverse layout
 ```
 recyclerView.addItemDecoration(ViewHolderStickyDecoration(recyclerView, adapter, true))
+```
+
+For GridLayoutManager you should set up SpanSizeLookup, for example
+```
+val spanCount = 3
+val lm = GridLayoutManager(recycler.context, spanCount, GridLayoutManager.VERTICAL, true)
+
+lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+    override fun getSpanSize(position: Int): Int {
+        // here we detect header and make it full width by set up max span    
+        if (adapter.getItemViewType(position) == SectionItemAdapter.TYPE_HEADER)
+            return spanCount
+        return 1 // or other value which are you want
+    }
+}
 ```
 [Full example here](https://github.com/OsomePteLtd/StickyDecorator/blob/master/app/src/main/java/com/osome/stickydecorator/SectionItemAdapter.kt)
 
