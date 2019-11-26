@@ -9,7 +9,7 @@ Some decoration use drawable, which gives great performance compared to view.**
 ![Sticky header reverse layout](https://github.com/OsomePteLtd/StickyDecorator/blob/master/images/sticky_header_reverse.gif)
 ![Sticky view holder](https://github.com/OsomePteLtd/StickyDecorator/blob/master/images/sticky_view_holder.gif)
 
-**Important!**: this decorations tested only with LinearLayoutManager, with other it can work incorrectly
+**Important!**: this Drawable decorations tested only with LinearLayoutManager, with other it can work incorrectly
 
 ### Install
 add repository in to root `build.gradle`
@@ -34,7 +34,8 @@ implementation "com.osome.decoration:sticky:<latest_version>"
 
 ### Usage    
 #### ViewHolderStickyDecoration             
-Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](https://github.com/OsomePteLtd/StickyDecorator/blob/master/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)   
+Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](https://github.com/OsomePteLtd/StickyDecorator/blob/master/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)
+This decoration also support **vertical** GridLayoutManager(see example application)
 Firstly, you should make implement yours Adapter this interface `ViewHolderStickyDecoration.Condition` like this:
 ```
 class SectionItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ViewHolderStickyDecoration.Condition {

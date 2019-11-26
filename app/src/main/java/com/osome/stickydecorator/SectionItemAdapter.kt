@@ -8,23 +8,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class SectionItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ViewHolderStickyDecoration.Condition {
+    companion object {
+        const val TYPE_HEADER = R.layout.section
+        const val TYPE_ITEM = R.layout.list_item
+    }
 
     override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == R.layout.list_item) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             return ItemHolder(view)
         }
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.section, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return SectionHolder(view)
     }
 
     override fun getItemViewType(position: Int): Int {
         if (isHeader(position))
-            return R.layout.section
-        return R.layout.list_item
+            return TYPE_HEADER
+        return TYPE_ITEM
     }
 
     override fun isHeader(position: Int): Boolean {
@@ -32,9 +36,9 @@ class SectionItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<R
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder.itemViewType == R.layout.list_item) {
+        if (holder.itemViewType == TYPE_ITEM) {
             (holder as ItemHolder).bind(getItem(position))
-        } else if (holder.itemViewType == R.layout.section) {
+        } else if (holder.itemViewType == TYPE_HEADER) {
             (holder as SectionHolder).bind(getItem(position) as SectionItem)
         }
     }

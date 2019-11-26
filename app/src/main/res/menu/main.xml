@@ -23,4 +23,12 @@
     <item
         android:id="@+id/viewHolderReverse"
         android:title="Sticky view holder reverse" />
+
+    <item
+        android:id="@+id/viewHolderGrid"
+        android:title="Sticky view holder grid" />
+
+    <item
+        android:id="@+id/viewHolderGridReverse"
+        android:title="Sticky view holder grid reverse" />
 </menu>

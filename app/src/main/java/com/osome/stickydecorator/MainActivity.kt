@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.osome.stickydecorator.decor.SectionDecor
 import com.osome.stickydecorator.decor.SectionDecorReverse
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
             R.id.sectionReverse -> setUpSectionReverseRecycler()
             R.id.viewHolder -> setUpViewHolderSection()
             R.id.viewHolderReverse -> setUpViewHolderSectionReverse()
+            R.id.viewHolderGrid -> setUpViewHolderSectionGrid()
+            R.id.viewHolderGridReverse -> setUpViewHolderSectionGridReverse()
         }
         return true
     }
@@ -98,6 +101,44 @@ class MainActivity : AppCompatActivity() {
         val adapter = SectionItemAdapter(generateItemWithSectionReverse(34))
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(recycler.context, LinearLayoutManager.VERTICAL, true)
+        recycler.addItemDecoration(ViewHolderStickyDecoration(recycler, adapter, true))
+    }
+
+    private fun setUpViewHolderSectionGrid() {
+        clearDecoration()
+        val adapter = SectionItemAdapter(generateItemWithSection(34))
+        recycler.adapter = adapter
+
+        val spanCount = 3
+        val lm = GridLayoutManager(recycler.context, spanCount)
+
+        lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                if (adapter.getItemViewType(position) == SectionItemAdapter.TYPE_HEADER)
+                    return spanCount
+                return 1
+            }
+        }
+        recycler.layoutManager = lm
+        recycler.addItemDecoration(ViewHolderStickyDecoration(recycler, adapter))
+    }
+
+    private fun setUpViewHolderSectionGridReverse() {
+        clearDecoration()
+        val adapter = SectionItemAdapter(generateItemWithSectionReverse(34))
+        recycler.adapter = adapter
+
+        val spanCount = 3
+        val lm = GridLayoutManager(recycler.context, spanCount, GridLayoutManager.VERTICAL, true)
+
+        lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                if (adapter.getItemViewType(position) == SectionItemAdapter.TYPE_HEADER)
+                    return spanCount
+                return 1
+            }
+        }
+        recycler.layoutManager = lm
         recycler.addItemDecoration(ViewHolderStickyDecoration(recycler, adapter, true))
     }
 
