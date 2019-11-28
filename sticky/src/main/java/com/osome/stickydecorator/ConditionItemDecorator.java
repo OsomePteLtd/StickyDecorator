@@ -132,4 +132,32 @@ public class ConditionItemDecorator extends RecyclerView.ItemDecoration {
          */
         void getItemOffsets(@NonNull RecyclerView parent, @NonNull Rect rect, @NonNull View view, int position, @NonNull RecyclerView.State state);
     }
+
+    public static abstract class SimpleDecor implements Decor {
+
+        @Override
+        public void prepareDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+
+        }
+
+        @Override
+        public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull View child, int position, @NonNull RecyclerView.State state) {
+
+        }
+
+        @Override
+        public void onPostDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+
+        }
+
+        @Override
+        public void getConditionItemOffsets(@NonNull RecyclerView parent, @NonNull Rect rect, @NonNull View view, int position) {
+
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull RecyclerView parent, @NonNull Rect rect, @NonNull View view, int position, @NonNull RecyclerView.State state) {
+
+        }
+    }
 }
