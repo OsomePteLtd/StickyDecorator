@@ -32,8 +32,13 @@ public abstract class VerticalStickyDecor extends VerticalSectionDecor {
     @Override
     public void getItemOffsets(@NonNull RecyclerView parent, @NonNull Rect rect, @NonNull View view, int position, @NonNull RecyclerView.State state) {
         super.getItemOffsets(parent, rect, view, position, state);
-        if (reverseLayout && position == state.getItemCount() - 1) {
-            rect.top += getHeaderHeight() + getHeaderMarginTop() + getHeaderMarginTop();
+        int count = 0;
+        RecyclerView.LayoutManager layout = parent.getLayoutManager();
+        if (layout != null) {
+            count = layout.getItemCount();
+        }
+        if (reverseLayout && position == count - 1) {
+            rect.top += getHeaderHeight() + getHeaderMarginTop() + getHeaderMarginBottom();
         }
     }
 
@@ -53,7 +58,6 @@ public abstract class VerticalStickyDecor extends VerticalSectionDecor {
             super.onDrawSectionInternal(c, position, sectionBounds, child);
         }
 
-        lastHeaderHeight = sectionBounds.height();
         lastHeaderHeight = sectionBounds.height();
         int contactPoint = getHeaderHeightInternal() + getHeaderMarginTop() + getHeaderMarginBottom();
         if ((contactPoint >= sectionBounds.top && contactPoint < sectionBounds.bottom + getHeaderMarginBottom())) {

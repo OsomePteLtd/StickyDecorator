@@ -27,10 +27,12 @@ public class ConditionItemDecorator extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
-        if (condition.isForDrawOver(position)) {
-            decor.getConditionItemOffsets(parent, outRect, view, position);
+        if (position != RecyclerView.NO_POSITION) {
+            if (condition.isForDrawOver(position)) {
+                decor.getConditionItemOffsets(parent, outRect, view, position);
+            }
+            decor.getItemOffsets(parent, outRect, view, position, state);
         }
-        decor.getItemOffsets(parent, outRect, view, position, state);
     }
 
     @Override
