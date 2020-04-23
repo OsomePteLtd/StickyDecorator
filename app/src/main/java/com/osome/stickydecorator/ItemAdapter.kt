@@ -5,11 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemAdapter.ItemHolder>(), ItemProvider<Item> {
+class ItemAdapter(items: List<Item>) : RecyclerView.Adapter<ItemAdapter.ItemHolder>(), ItemProvider<Item> {
 
-    override fun getItemCount(): Int = items.size
+    private val differ: AsyncListDiffer<Item> = AsyncListDiffer(this, DiffItem())
+
+    init {
+        setList(items)
+    }
+
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -21,8 +29,14 @@ class ItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemAdap
     }
 
     private fun getItem(position: Int): Item {
-        return items[position]
+        return get(position)
     }
+
+    fun setList(list: List<Item>) {
+        differ.submitList(list.toList())
+    }
+
+    fun getList() = differ.currentList.toList()
 
     class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvItem = itemView.findViewById<TextView>(R.id.tvItem)
@@ -34,8 +48,19 @@ class ItemAdapter(private val items: List<Item>) : RecyclerView.Adapter<ItemAdap
     }
 
     override fun get(position: Int): Item {
-        return items[position]
+        return differ.currentList[position]
     }
 
-    override fun size(): Int = items.size
+    override fun size(): Int = itemCount
+}
+
+class DiffItem : DiffUtil.ItemCallback<Item>() {
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem.value == newItem.value
+    }
+
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem.value == newItem.value
+    }
+
 }
