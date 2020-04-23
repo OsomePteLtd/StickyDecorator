@@ -21,9 +21,22 @@ public abstract class VerticalSectionDecor implements ConditionItemDecorator.Dec
 
     @Override
     public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull View child, int position, @NonNull RecyclerView.State state) {
-        parent.getDecoratedBoundsWithMargins(child, decoratedBounds);
+        Rect decoratedBounds = getDecoratedViewBounds(parent, child);
         Rect bounds = getViewBounds(parent, child);
         onDrawSectionInternal(c, position, getSectionBounds(parent, position, bounds, decoratedBounds), child);
+    }
+
+    /**
+     * Returns the bounds of the view including its decoration and margins.
+     * This bounds also include view translations
+     *
+     * @param child The view element to check
+     * @return The bounds of the view including its decoration and margins.
+     */
+    protected Rect getDecoratedViewBounds(@NonNull RecyclerView parent, @NonNull View child) {
+        parent.getDecoratedBoundsWithMargins(child, decoratedBounds);
+        addTranslationOffsetToViewBounds(child, decoratedBounds);
+        return decoratedBounds;
     }
 
     void onDrawSectionInternal(@NonNull Canvas c, int position, @NonNull Rect sectionBounds, @NonNull View child) {
