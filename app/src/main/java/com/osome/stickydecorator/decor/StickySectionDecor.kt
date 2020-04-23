@@ -33,13 +33,6 @@ class StickySectionDecor(private val itemProvider: ItemProvider<Item>) : Vertica
         return header
     }
 
-    override fun getSectionBounds(parent: RecyclerView, position: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
-        section.text = getHeaderValue(position)
-        val temp = super.getSectionBounds(parent, position, viewBounds, decoratedBounds)
-        section.setTopCenter(temp.exactCenterX(), temp.top.toFloat())
-        return section.bounds
-    }
-
     override fun getHeaderBounds(parent: RecyclerView, headerBottom: Int, itemPosition: Int, viewBounds: Rect, decoratedBounds: Rect): Rect {
         header.text = getHeaderValue(itemPosition)
         val temp = super.getHeaderBounds(parent, headerBottom, itemPosition, viewBounds, decoratedBounds)

@@ -3,9 +3,9 @@ package com.osome.stickydecorator;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * By default decor draw full width and height allocated in {@link ConditionItemDecorator.Decor#getConditionItemOffsets(RecyclerView, Rect, View, int)}
  */
 public abstract class VerticalSectionDecor implements ConditionItemDecorator.Decor {
+    protected GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.DefaultSpanSizeLookup();
 
     protected final Rect decoratedBounds = new Rect();
     protected final Rect viewBounds = new Rect();
@@ -31,10 +32,28 @@ public abstract class VerticalSectionDecor implements ConditionItemDecorator.Dec
 
     protected abstract void onDrawSection(@NonNull Canvas c, int position, @NonNull Rect sectionBounds, @NonNull View child);
 
-    protected final Rect getViewBounds(ViewGroup parent, View child) {
+    /**
+     * Get view bounds without decoration offsets
+     *
+     * @param parent - current recycler view
+     * @param child  - itemView from recycler view
+     * @return real view bounds without decoration offsets
+     */
+    protected Rect getViewBounds(@NonNull RecyclerView parent, @NonNull View child) {
         child.getDrawingRect(viewBounds);
         parent.offsetDescendantRectToMyCoords(child, viewBounds);
+        addTranslationOffsetToViewBounds(child, viewBounds);
         return viewBounds;
+    }
+
+    /**
+     * Add view translation to bound to support {@link androidx.recyclerview.widget.DefaultItemAnimator}
+     *
+     * @param child      - itemView from recycler
+     * @param viewBounds - current itemView bounds without decoration offsets
+     */
+    protected void addTranslationOffsetToViewBounds(@NonNull View child, @NonNull Rect viewBounds) {
+        viewBounds.offset((int) child.getTranslationX(), (int) child.getTranslationY());
     }
 
     @NonNull
@@ -92,5 +111,9 @@ public abstract class VerticalSectionDecor implements ConditionItemDecorator.Dec
      */
     protected int getSectionMarginBottom() {
         return 0;
+    }
+
+    public void setSpanSizeLookup(GridLayoutManager.SpanSizeLookup spanSizeLookup) {
+        this.spanSizeLookup = spanSizeLookup;
     }
 }
