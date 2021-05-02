@@ -1,6 +1,4 @@
 ### StickyDecorator
-[![Download](https://api.bintray.com/packages/osome/decoration/sticky/images/download.svg)](https://bintray.com/osome/decoration/sticky/_latestVersion)
-
 
 **Lightweight library to easy implement sectioning and sticky header.  
 Some decoration use drawable, which gives great performance compared to view.**
