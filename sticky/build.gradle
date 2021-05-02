@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -26,6 +26,19 @@ android {
         }
     }
 
+}
+
+publishing {
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            name "Nexus"
+            credentials {
+                username project.nexusLogin
+                password project.nexusPass
+            }
+        }
+    }
 }
 
 dependencies {
