@@ -3,9 +3,9 @@
 **Lightweight library to easy implement sectioning and sticky header.  
 Some decoration use drawable, which gives great performance compared to view.**
 
-![Sticky header](https://github.com/OsomePteLtd/StickyDecorator/blob/master/images/sticky_header.gif)
-![Sticky header reverse layout](https://github.com/OsomePteLtd/StickyDecorator/blob/master/images/sticky_header_reverse.gif)
-![Sticky view holder](https://github.com/OsomePteLtd/StickyDecorator/blob/master/images/sticky_view_holder.gif)
+![Sticky header](/images/sticky_header.gif)
+![Sticky header reverse layout](/images/sticky_header_reverse.gif)
+![Sticky view holder](/images/sticky_view_holder.gif)
 
 **Important!**: this Drawable decorations tested only with LinearLayoutManager, with other it can work incorrectly
 
@@ -15,27 +15,22 @@ add repository in to root `build.gradle`
 allprojects {
     repositories {
         google()
-        jcenter()
-        
-        // this repository
-        maven {
-            url "https://dl.bintray.com/osome/decoration"
-        }
+        mavenCentral()
     }
 }
 ```
 
 and add dependency   
 ```
-implementation "com.osome.decoration:sticky:<latest_version>"
+implementation "ru.turlir.android:sticky-decoration:1.0.0"
 ```
 
 ### Usage    
 #### ViewHolderStickyDecoration             
-Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](https://github.com/OsomePteLtd/StickyDecorator/blob/master/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)   
+Easiest way to integrate sticky header is view holder based decoration [ViewHolderStickyDecoration](/sticky/src/main/java/com/osome/stickydecorator/ViewHolderStickyDecoration.java)
 This decoration also support **vertical** GridLayoutManager(see example application)   
 Firstly, you should make implement yours Adapter this interface `ViewHolderStickyDecoration.Condition` like this:
-```
+``` kotlin
 class SectionItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), ViewHolderStickyDecoration.Condition {
 
     override fun isHeader(position: Int): Boolean {
@@ -45,16 +40,16 @@ class SectionItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View
 }
 ```
 and after it add decoration in to RecyclerView
-```
+``` kotlin
 recyclerView.addItemDecoration(ViewHolderStickyDecoration(recyclerView, adapter))
 ```
 If you are use reverse layout
-```
+``` kotlin
 recyclerView.addItemDecoration(ViewHolderStickyDecoration(recyclerView, adapter, true))
 ```
 
 For GridLayoutManager you should set up SpanSizeLookup, for example
-```
+``` kotlin
 val spanCount = 3
 val lm = GridLayoutManager(recycler.context, spanCount)
 
@@ -67,7 +62,7 @@ lm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
     }
 }
 ```
-[Full example here](https://github.com/OsomePteLtd/StickyDecorator/blob/master/app/src/main/java/com/osome/stickydecorator/SectionItemAdapter.kt)
+[Full example here](/app/src/main/java/com/osome/stickydecorator/SectionItemAdapter.kt)
 
 
 #### VerticalDrawableSectionDecor
@@ -75,7 +70,7 @@ This decoration allows implement sectioning with drawable.
 
 **First step:**   
 You should extends abstract class VerticalDrawableSectionDecor and implements two methods  
-```
+``` kotlin
 class SectionDecor : VerticalDrawableSectionDecor() {
     override fun getDrawable(position: Int, sectionBounds: Rect, child: View): Drawable {
         // here you return drawable which will be drawn
@@ -89,20 +84,20 @@ class SectionDecor : VerticalDrawableSectionDecor() {
 ```
 **Second step:**
 Implement interface ConditionItemDecorator.Condition with single method to determine for which adapter item will be drawn section
-```   
+``` kotlin
 // here the first element and each 10th element will be split with section
 val condition = ConditionItemDecorator.Condition { position ->
     (itemProvider.get(position).value + 1) % 10 == 0 || position == 0
 }
 ```
 **And finally**
-```
+``` kotlin
 val decorator = ConditionItemDecorator(condition, SectionDecor())
 recyclerView.addItemDecoration(decorator)                
 ```
 
 also you can add top and bottom margins for section, just override two methods
-```
+``` kotlin
 override fun getSectionMarginTop(): Int {
     // return value for top space
 }
@@ -113,14 +108,14 @@ override fun getSectionMarginBottom(): Int {
 ```
 
 In this case drawable will be drawn above item(for reverse layout too)   
-Full examples [here](https://github.com/OsomePteLtd/StickyDecorator/blob/master/app/src/main/java/com/osome/stickydecorator/decor/SectionDecor.kt) and [here](https://github.com/OsomePteLtd/StickyDecorator/blob/master/app/src/main/java/com/osome/stickydecorator/decor/SectionDecorReverse.kt)
+Full examples [here](/app/src/main/java/com/osome/stickydecorator/decor/SectionDecor.kt) and [here](/app/src/main/java/com/osome/stickydecorator/decor/SectionDecorReverse.kt)
 
 #### VerticalStickyDrawableDecor
 This decoration allows implement sectioning and sticky header with drawable.    
 
 **First step:**
 You should extends abstract class VerticalStickyDrawableDecor and implement three methods   
-```
+``` kotlin
 class StickySectionDecor : VerticalStickyDrawableDecor() {
 
     override fun getSectionHeight(position: Int): Int {
@@ -141,7 +136,7 @@ class StickySectionDecor : VerticalStickyDrawableDecor() {
 
 or for reverse layout
 
-```
+``` kotlin
 class StickySectionDecor : VerticalStickyDrawableDecor(true) { <====  here set in to constructor flag for reverse layout 
 
     override fun getSectionHeight(position: Int): Int {
@@ -162,20 +157,20 @@ class StickySectionDecor : VerticalStickyDrawableDecor(true) { <====  here set i
 
 **Second step:**
 Implement interface ConditionItemDecorator.Condition with single method to determine for which adapter item will be drawn section
-```   
+``` kotlin
 // here the first element and each 10th element will be split with section
 val condition = ConditionItemDecorator.Condition { position ->
     (itemProvider.get(position).value + 1) % 10 == 0 || position == 0
 }
 ```
 **And finally**
-```
+``` kotlin
 val decorator = ConditionItemDecorator(condition, StickySectionDecor())
 recyclerView.addItemDecoration(decorator)                
 ```  
 
 also you can add top and bottom margins for header, just override two methods 
-```
+``` kotlin
     override fun getHeaderMarginTop(): Int {
         // return header top space
     }
@@ -188,7 +183,7 @@ also you can add top and bottom margins for header, just override two methods
 #### SimpleTextDrawable
 To simplify usage drawable decorator library contains also SimpleTextDrawable class.   
 This class allow build styled drawable 
-```
+``` kotlin
 SimpleTextDrawable.Builder()
                 .setPaddingSymmetricDp(12, 4)
                 .setBackgroundColor(Color.LTGRAY)
